@@ -27,6 +27,7 @@ from invokeai.app.invocations.primitives import (
     title="Depth Map from Wavefront OBJ",
     tags=["image", "depth", "wavefront", "obj"],
     category="image",
+    version="1.0.0",
 )
 class DepthMapFromWavefrontObjInvocation(BaseInvocation):
     """Renders a 3D depth map of a model described by a Wavefront .OBJ file"""

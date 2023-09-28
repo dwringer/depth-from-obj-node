@@ -27,7 +27,7 @@ from invokeai.app.invocations.primitives import (
     title="Depth Map from Wavefront OBJ",
     tags=["image", "depth", "wavefront", "obj"],
     category="image",
-    version="1.0.0",
+    version="1.0.1",
 )
 class DepthMapFromWavefrontObjInvocation(BaseInvocation):
     """Renders a 3D depth map of a model described by a Wavefront .OBJ file"""
@@ -149,7 +149,8 @@ class DepthMapFromWavefrontObjInvocation(BaseInvocation):
             image_category=ImageCategory.GENERAL,
             node_id=self.id,
             session_id=context.graph_execution_state_id,
-            is_intermediate=self.is_intermediate
+            is_intermediate=self.is_intermediate,
+            workflow=self.workflow,
         )
         return ImageOutput(image=ImageField(image_name=image_dto.image_name),
                            width=image_dto.width,

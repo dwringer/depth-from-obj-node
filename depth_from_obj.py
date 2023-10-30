@@ -6,13 +6,15 @@ import numpy
 from matplotlib.collections import PolyCollection
 from PIL import Image
 
-from invokeai.app.models.image import ImageCategory, ResourceOrigin
+from invokeai.app.services.image_records.image_records_common import ImageCategory, ResourceOrigin
 from invokeai.app.invocations.baseinvocation import (
     BaseInvocation,
     InputField,
     invocation,
     InvocationContext,
     invocation_output,
+    WithMetadata,
+    WithWorkflow,
 )
 from invokeai.app.invocations.primitives import (
     ImageField,
@@ -27,18 +29,18 @@ from invokeai.app.invocations.primitives import (
     title="Depth Map from Wavefront OBJ",
     tags=["image", "depth", "wavefront", "obj"],
     category="image",
-    version="1.0.1",
+    version="1.1.0",
 )
-class DepthMapFromWavefrontObjInvocation(BaseInvocation):
+class DepthMapFromWavefrontObjInvocation(BaseInvocation, WithMetadata, WithWorkflow):
     """Renders a 3D depth map of a model described by a Wavefront .OBJ file"""
     width:  int = InputField(default=512, description="Width of the desired depth map output")
     height: int = InputField(default=512, description="Height of the desired depth map output")
     obj_file_path: str = InputField(default="", description="Path to a valid Wavefront .OBJ 3D model file")
     rotate_x: int = InputField(default=20, description="Degrees by which to tip the model about the x-axis after y-rotation")
     rotate_y: int = InputField(default=45, description="Degrees by which to rotate the model's bearing about the y-axis")
-    translate_x: float = InputField(default=0, description="Normal units to translate camera in the x-axis")
-    translate_y: float = InputField(default=0, description="Normal units to translate camera in the y-axis")
-    translate_z: float = InputField(default=-3.5, description="Normal units to translate camera in the z-axis")
+    translate_x: float = InputField(default=0, description="Normal units to translate model in the x-axis")
+    translate_y: float = InputField(default=0, description="Normal units to translate model in the y-axis")
+    translate_z: float = InputField(default=-3.5, description="Normal units to translate model in the z-axis")
     fov: float = InputField(default=25, description="FOV for the camera viewport (in degrees)")
 
     def frustum(self, left, right, bottom, top, z_near, z_far):
